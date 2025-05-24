@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { Plus, User, Eye, Search } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Plus, User, Eye, Search, LayoutDashboard } from "lucide-react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,7 @@ const menuItems = [
   { title: "Following", url: "/following", icon: User },
   { title: "Explore", url: "/explore", icon: Search },
   { title: "History", url: "/history", icon: Eye },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
 ];
 
 const feeds = ["Java", "Frontend", "Backend", "AI", "React", "Node.js"];
@@ -28,13 +29,14 @@ const networkItems = ["Find Squads", "AI Tools", "My Network"];
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname;
   const collapsed = state === "collapsed";
 
   const isActive = (path: string) => currentPath === path;
 
   const handleNewPost = () => {
-    alert("New Post feature coming soon!");
+    navigate("/new-post");
   };
 
   const handleFeedClick = (feed: string) => {

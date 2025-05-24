@@ -2,12 +2,18 @@
 import { BlogCard } from "@/components/BlogCard";
 import { mockBlogPosts } from "@/data/mockData";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function HomePage() {
   const [posts] = useState(mockBlogPosts);
+  const navigate = useNavigate();
 
   const handleLoadMore = () => {
     alert("Load More feature coming soon!");
+  };
+
+  const handleBlogClick = (id: string) => {
+    navigate(`/blog/${id}`);
   };
 
   return (
@@ -22,7 +28,9 @@ export function HomePage() {
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+            <div key={post.id} onClick={() => handleBlogClick(post.id)} className="cursor-pointer">
+              <BlogCard post={post} />
+            </div>
           ))}
         </div>
 
