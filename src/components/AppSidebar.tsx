@@ -26,20 +26,36 @@ const feeds = ["Java", "Frontend", "Backend", "AI", "React", "Node.js"];
 const networkItems = ["Find Squads", "AI Tools", "My Network"];
 
 export function AppSidebar() {
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
+  const collapsed = state === "collapsed";
 
   const isActive = (path: string) => currentPath === path;
 
+  const handleNewPost = () => {
+    alert("New Post feature coming soon!");
+  };
+
+  const handleFeedClick = (feed: string) => {
+    alert(`${feed} feed coming soon!`);
+  };
+
+  const handleNetworkClick = (item: string) => {
+    alert(`${item} feature coming soon!`);
+  };
+
   return (
-    <Sidebar className={`${collapsed ? "w-14" : "w-64"} bg-zinc-900 border-r border-zinc-800 fixed left-0 top-16 h-[calc(100vh-4rem)]`} collapsible>
+    <Sidebar className={`${collapsed ? "w-14" : "w-64"} bg-zinc-900 border-r border-zinc-800 fixed left-0 top-16 h-[calc(100vh-4rem)]`} collapsible="icon">
       <SidebarTrigger className="m-2 self-end text-zinc-400 hover:text-white" />
       
-      <SidebarContent className="p-4">
+      <SidebarContent className="p-4 bg-zinc-900">
         {/* New Post Button */}
         <div className="mb-6">
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
+          <button 
+            onClick={handleNewPost}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center gap-2 transition-colors"
+          >
             <Plus size={18} />
             {!collapsed && <span>New Post</span>}
           </button>
@@ -81,7 +97,10 @@ export function AppSidebar() {
                 {feeds.map((feed) => (
                   <SidebarMenuItem key={feed}>
                     <SidebarMenuButton asChild>
-                      <button className="w-full text-left text-zinc-400 hover:text-white hover:bg-zinc-800 px-3 py-2 rounded-lg transition-colors text-sm">
+                      <button 
+                        onClick={() => handleFeedClick(feed)}
+                        className="w-full text-left text-zinc-400 hover:text-white hover:bg-zinc-800 px-3 py-2 rounded-lg transition-colors text-sm"
+                      >
                         # {feed}
                       </button>
                     </SidebarMenuButton>
@@ -103,7 +122,10 @@ export function AppSidebar() {
                 {networkItems.map((item) => (
                   <SidebarMenuItem key={item}>
                     <SidebarMenuButton asChild>
-                      <button className="w-full text-left text-zinc-400 hover:text-white hover:bg-zinc-800 px-3 py-2 rounded-lg transition-colors text-sm">
+                      <button 
+                        onClick={() => handleNetworkClick(item)}
+                        className="w-full text-left text-zinc-400 hover:text-white hover:bg-zinc-800 px-3 py-2 rounded-lg transition-colors text-sm"
+                      >
                         {item}
                       </button>
                     </SidebarMenuButton>

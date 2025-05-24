@@ -26,6 +26,26 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
+  const handleBlogClick = () => {
+    alert(`Opening blog: ${post.title}`);
+  };
+
+  const handleCommentClick = () => {
+    alert(`Comments: ${post.stats.comments}`);
+  };
+
+  const handleLikeClick = () => {
+    alert(`Likes: ${post.stats.likes}`);
+  };
+
+  const handleTagClick = (tag: string) => {
+    alert(`Viewing posts tagged: ${tag}`);
+  };
+
+  const handleEditReview = () => {
+    alert(`Reviewing ${post.proposedEdits} proposed edits`);
+  };
+
   return (
     <article className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-all duration-200 hover:shadow-xl hover:shadow-black/20">
       {/* Author Header */}
@@ -55,7 +75,10 @@ export function BlogCard({ post }: BlogCardProps) {
 
       {/* Content */}
       <div className="px-4 pb-3">
-        <h2 className="text-xl font-bold text-white mb-3 leading-tight hover:text-blue-400 cursor-pointer transition-colors">
+        <h2 
+          onClick={handleBlogClick}
+          className="text-xl font-bold text-white mb-3 leading-tight hover:text-blue-400 cursor-pointer transition-colors"
+        >
           {post.title}
         </h2>
         
@@ -70,7 +93,8 @@ export function BlogCard({ post }: BlogCardProps) {
           <img 
             src={post.image} 
             alt="Post preview"
-            className="w-full h-48 object-cover rounded-lg"
+            className="w-full h-48 object-cover rounded-lg cursor-pointer"
+            onClick={handleBlogClick}
           />
         </div>
       )}
@@ -82,6 +106,7 @@ export function BlogCard({ post }: BlogCardProps) {
             {post.tags.map((tag) => (
               <span 
                 key={tag}
+                onClick={() => handleTagClick(tag)}
                 className="bg-zinc-800 text-zinc-300 px-2 py-1 rounded-md text-xs hover:bg-zinc-700 cursor-pointer transition-colors"
               >
                 #{tag}
@@ -97,7 +122,10 @@ export function BlogCard({ post }: BlogCardProps) {
           <div className="text-amber-400 text-sm font-medium">
             {post.proposedEdits} proposed edit{post.proposedEdits > 1 ? 's' : ''} pending review
           </div>
-          <button className="text-amber-300 text-xs hover:text-amber-200 transition-colors">
+          <button 
+            onClick={handleEditReview}
+            className="text-amber-300 text-xs hover:text-amber-200 transition-colors cursor-pointer"
+          >
             Review changes →
           </button>
         </div>
@@ -107,12 +135,18 @@ export function BlogCard({ post }: BlogCardProps) {
       <div className="px-4 py-3 border-t border-zinc-800 bg-zinc-950/50">
         <div className="flex items-center justify-between text-zinc-400">
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1 hover:text-blue-400 transition-colors">
+            <button 
+              onClick={handleCommentClick}
+              className="flex items-center gap-1 hover:text-blue-400 transition-colors"
+            >
               <MessageSquare size={16} />
               <span className="text-sm">{post.stats.comments}</span>
             </button>
             
-            <button className="flex items-center gap-1 hover:text-red-400 transition-colors">
+            <button 
+              onClick={handleLikeClick}
+              className="flex items-center gap-1 hover:text-red-400 transition-colors"
+            >
               <ThumbsUp size={16} />
               <span className="text-sm">{post.stats.likes}</span>
             </button>
